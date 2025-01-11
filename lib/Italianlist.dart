@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app_789/model/recipemodel.dart';
+import 'recipe_detail.dart';  
 
 class ItalianList extends StatelessWidget {
   final List<Recipe> italianRecipes = [
@@ -7,56 +8,37 @@ class ItalianList extends StatelessWidget {
       name: 'Pizza',
       description: 'A classic Italian dish with a crispy base and delicious toppings.',
       ingredients: ['Flour', 'Tomato Sauce', 'Cheese', 'Toppings'],
-      image: 'assets/images/Pizza.jpg', 
+      image: 'assets/Pizza.jpg',
     ),
     Recipe(
       name: 'Pasta',
       description: 'A traditional Italian dish with rich and creamy sauces.',
       ingredients: ['Pasta', 'Olive Oil', 'Garlic', 'Parmesan Cheese'],
-      image: 'assets/images/Pasta.jpg', 
+      image: 'assets/Pasta.jpg',
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Italian Recipes')),
+      appBar: AppBar(title: const Text('Italian Recipes')),
       body: ListView.builder(
         itemCount: italianRecipes.length,
         itemBuilder: (context, index) {
           final recipe = italianRecipes[index];
           return Card(
-            margin: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
             child: ListTile(
-              leading: Image.asset(recipe.image, width: 50, height: 50, fit: BoxFit.cover), // Add image preview
-              title: Text(recipe.name, style: TextStyle(fontWeight: FontWeight.bold)),
+              leading: Image.asset(recipe.image, width: 50, height: 50, fit: BoxFit.cover),
+              title: Text(recipe.name, style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(recipe.description),
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Text(recipe.name),
-                      content: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(recipe.image, width: double.infinity, fit: BoxFit.cover), // Full image in dialog
-                          SizedBox(height: 10),
-                          Text('Description: ${recipe.description}'),
-                          SizedBox(height: 10),
-                          Text('Ingredients:'),
-                          ...recipe.ingredients.map((ingredient) => Text('- $ingredient')).toList(),
-                        ],
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text('Close'),
-                        ),
-                      ],
-                    );
-                  },
+                // Navigate to RecipeDetail page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RecipeDetail(recipe: recipe),
+                  ),
                 );
               },
             ),
@@ -66,4 +48,3 @@ class ItalianList extends StatelessWidget {
     );
   }
 }
-

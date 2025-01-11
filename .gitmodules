@@ -1,0 +1,3 @@
+[submodule "recipeapp"]
+	path = recipeapp
+	url = https://github.com/kritikaPudasaini/recipeapp

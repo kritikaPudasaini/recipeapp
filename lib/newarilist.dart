@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app_789/model/recipemodel.dart';
-
+import 'recipe_detail.dart'; 
 
 class NewariList extends StatelessWidget {
   final List<Recipe> newariRecipes = [
@@ -8,56 +8,37 @@ class NewariList extends StatelessWidget {
       name: 'Yomari',
       description: 'A sweet steamed dumpling made from rice flour, filled with molasses and sesame seeds.',
       ingredients: ['Rice Flour', 'Molasses', 'Sesame Seeds'],
-      image: 'assets/images/Yomari.jpg', 
+      image: 'assets/Yomari.jpg',
     ),
     Recipe(
       name: 'Newari Khaja Set',
       description: 'A traditional platter of beaten rice served with various side dishes.',
       ingredients: ['Beaten Rice', 'Meat', 'Pickles', 'Eggs'],
-      image: 'assets/images/Newari Khaja Set.jpg', 
+      image: 'assets/Newari Khaja Set.jpg',
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Newari Recipes')),
+      appBar: AppBar(title: const Text('Newari Recipes')),
       body: ListView.builder(
         itemCount: newariRecipes.length,
         itemBuilder: (context, index) {
           final recipe = newariRecipes[index];
           return Card(
-            margin: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
             child: ListTile(
-              leading: Image.asset(recipe.image, width: 50, height: 50, fit: BoxFit.cover), 
-              title: Text(recipe.name, style: TextStyle(fontWeight: FontWeight.bold)),
+              leading: Image.asset(recipe.image, width: 50, height: 50, fit: BoxFit.cover),
+              title: Text(recipe.name, style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(recipe.description),
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Text(recipe.name),
-                      content: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(recipe.image, width: double.infinity, fit: BoxFit.cover), // Full image in dialog
-                          SizedBox(height: 10),
-                          Text('Description: ${recipe.description}'),
-                          SizedBox(height: 10),
-                          Text('Ingredients:'),
-                          ...recipe.ingredients.map((ingredient) => Text('- $ingredient')).toList(),
-                        ],
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text('Close'),
-                        ),
-                      ],
-                    );
-                  },
+                // Navigate to the RecipeDetail page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RecipeDetail(recipe: recipe),
+                  ),
                 );
               },
             ),
